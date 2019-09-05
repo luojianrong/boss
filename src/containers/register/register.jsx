@@ -3,6 +3,8 @@ import './register.less';
 import {NavBar,WingBlank,List,InputItem,WhiteSpace,Radio,Button} from 'antd-mobile';
 import Logo from '../../components/logo/logo';
 
+import {reqRegister} from '../../api'
+
 const {RadioItem} = Radio;
 /*NavBar:导航栏  WingBlank，WhiteSpace:两边留白  Radio:单选按钮*/
 export default class Register extends React.Component{
@@ -36,9 +38,16 @@ export default class Register extends React.Component{
 
   //点击注册，发送请求
   toRegister = ()=>{
-    const {username,password,type} = this.state;
-
-
+    const {name,pwd,type} = this.state;
+    console.log(name,pwd,type)
+    //发送请求
+    reqRegister({name,pwd,type})
+      .then((data)=>{
+        console.log(data)
+      })
+      .catch((err)=>{
+        if (err) console.log('注册失败')
+      })
   }
   render(){
     return (
@@ -47,9 +56,9 @@ export default class Register extends React.Component{
         <Logo/>
         <WingBlank>
           <List>
-            <InputItem onChange={(val)=>{this.handleChange("username",val)}}>用户名：</InputItem>
+            <InputItem onChange={(val)=>{this.handleChange("name",val)}}>用户名：</InputItem>
             <WhiteSpace/>
-            <InputItem type="password" onChange={(val)=>{this.handleChange("password",val)}}>密码：</InputItem>
+            <InputItem type="password" onChange={(val)=>{this.handleChange("pwd",val)}}>密码：</InputItem>
             <WhiteSpace/>
             <InputItem type="password" onChange={(val)=>{this.handleChange("rePassword",val)}}>确认密码：</InputItem>
             <WhiteSpace/>
